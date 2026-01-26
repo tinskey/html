@@ -2,12 +2,11 @@
 
 namespace Collective\Html;
 
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\View\Compilers\BladeCompiler;
 
-class HtmlServiceProvider extends ServiceProvider implements DeferrableProvider
+class HtmlServiceProvider extends ServiceProvider
 {
     /**
      * Supported Blade Directives
