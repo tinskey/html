@@ -5,6 +5,11 @@ namespace Collective\Html;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\View\Compilers\BladeCompiler;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Collective\Html\FormBuilder;
+use Collective\Html\HtmlBuilder;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\Request;
 
 class HtmlServiceProvider extends ServiceProvider
 {
