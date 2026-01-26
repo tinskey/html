@@ -29,7 +29,6 @@ class HtmlServiceProvider extends ServiceProvider implements DeferrableProvider
         $this->registerFormBuilder();
 
         $this->app->alias('html', HtmlBuilder::class);
-        $this->app->alias('form', FormBuilder::class);
 
         $this->registerBladeDirectives();
     }
@@ -53,11 +52,24 @@ class HtmlServiceProvider extends ServiceProvider implements DeferrableProvider
      */
     protected function registerFormBuilder()
     {
-        $this->app->singleton('form', function ($app) {
-            $form = new FormBuilder($app['html'], $app['url'], $app['view'], ($app['session.store'] ? $app['session.store']->token() : null), $app['request']);
+        $this->app->singleton(FormBuilder::class, function ($app) {
+            $csrfToken = null;
 
-            return $form->setSessionStore($app['session.store']);
+            if ($app->bound('session.store') && $app['session.store']) {
+                $csrfToken = $app['session.store']->token();
+            }
+
+            return new FormBuilder(
+                $app['html'],
+                $app['url'],
+                $app['view'],
+                $csrfToken,
+                $app['request']
+            );
         });
+
+        // Keep the string alias for compatibility
+        $this->app->alias(FormBuilder::class, 'form');
     }
 
     /**
