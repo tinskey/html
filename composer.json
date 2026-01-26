@@ -1,5 +1,6 @@
 {
     "name": "tinskey/laravelcollective-html",
+    "version": "11.0.0",
     "description": "HTML and Form Builders for the Laravel Framework",
     "license": "MIT",
     "homepage": "https://laravelcollective.com",
@@ -40,7 +41,8 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "6.x-dev"
+            "dev-master": "6.x-dev",
+            "dev-laravel-11": "11.0.x-dev"
         },
         "laravel": {
             "providers": [
