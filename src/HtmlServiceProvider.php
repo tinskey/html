@@ -59,18 +59,25 @@ class HtmlServiceProvider extends ServiceProvider implements DeferrableProvider
                 $csrfToken = $app['session.store']->token();
             }
 
-            return new FormBuilder(
-                $app['html'],
-                $app['url'],
-                $app['view'],
+            $form = new FormBuilder(
+                $app->make(HtmlBuilder::class),
+                $app->make(UrlGenerator::class),
+                $app->make(Factory::class),
                 $csrfToken,
-                $app['request']
+                $app->make(Request::class)
             );
+
+            if ($app->bound('session.store') && $app['session.store']) {
+                $form->setSessionStore($app['session.store']);
+            }
+
+            return $form;
         });
 
-        // Keep the string alias for compatibility
+        // Alias AFTER binding the concrete class
         $this->app->alias(FormBuilder::class, 'form');
     }
+
 
     /**
      * Register Blade directives.
