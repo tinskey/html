@@ -54,7 +54,7 @@ class HtmlServiceProvider extends ServiceProvider implements DeferrableProvider
     protected function registerFormBuilder()
     {
         $this->app->singleton('form', function ($app) {
-            $form = new FormBuilder($app['html'], $app['url'], $app['view'], $app['session.store']->token(), $app['request']);
+            $form = new FormBuilder($app['html'], $app['url'], $app['view'], ($app['session.store'] ? $app['session.store']->token() : null), $app['request']);
 
             return $form->setSessionStore($app['session.store']);
         });
@@ -86,15 +86,5 @@ class HtmlServiceProvider extends ServiceProvider implements DeferrableProvider
                 }
             }
         });
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['html', 'form', HtmlBuilder::class, FormBuilder::class];
     }
 }
